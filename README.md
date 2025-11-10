@@ -15,58 +15,43 @@
 - Basic familiarity with React and command line
 - (Optional) GitHub CLI (`gh`) for faster repository setup
 
-## 📦 Application Location
+## 📦 Getting Started
 
-The starter application is provided in the `react-cicd-demo/` directory. Copy this entire directory to begin the exercise.
+The starter application is available at: **https://github.com/juanchoclasses/react-cicd-demo/**
 
 ## Team Setup (5 minutes)  
 
 **This is a team exercise. One team member should:**
 
-1. Create a new repository on GitHub named `react-cicd-demo`
+1. **Fork the repository:**
+   - Go to https://github.com/juanchoclasses/react-cicd-demo/
+   - Click the **"Fork"** button in the top-right corner
+   - **Important:** Keep the repository name as `react-cicd-demo` (do NOT change it)
+   - This creates a copy in your GitHub account: `https://github.com/YOUR-USERNAME/react-cicd-demo/`
    
-   **Option A: Using GitHub Web Interface**
-   - Go to github.com and click the **"+"** in the top-right → **"New repository"**
-   - Repository name: `react-cicd-demo`
-   - Make it **public** (required for GitHub Pages)
-   - Do NOT initialize with README, .gitignore, or license
-   - Click **"Create repository"**
-   
-   **Option B: Using GitHub CLI** (if you have `gh` installed)
-   ```bash
-   gh repo create react-cicd-demo --public --description "React CI/CD Demo"
-   ```
-   This creates the repository without cloning it yet.
-   
-   **Option C: Skip this step** if you plan to use Workflow A in Part 2 (local-first with `gh` CLI) - it will create the repo automatically.
+   > ⚠️ **Note:** The repository name must remain `react-cicd-demo` because the build configuration (`vite.config.ts`) uses this path for GitHub Pages deployment. If you change the name, the deployed site won't work correctly.
 
-2. Invite team members as collaborators:
-   
-   **Note:** If using Workflow A (local-first), do this AFTER pushing your code in Part 2.
-   
-   **Option A: Using GitHub Web Interface**
-   - Go to repository **Settings** → **Collaborators**
+2. **Clone your fork locally:**
+   ```bash
+   # Replace YOUR-USERNAME with your actual GitHub username
+   git clone https://github.com/YOUR-USERNAME/react-cicd-demo.git
+   cd react-cicd-demo
+   ```
+
+3. **Invite team members as collaborators:**
+   - Go to your forked repository on GitHub
+   - Navigate to **Settings** → **Collaborators**
    - Click **Add people**
    - Add each team member's GitHub username
-   - Add the professor: **sillyfunnypedro**
-   
-   **Option B: Using GitHub CLI**
-   ```bash
-   # Invite team members (replace with actual usernames)
-   gh repo set-access react-cicd-demo --user teammate1 --permission push
-   gh repo set-access react-cicd-demo --user teammate2 --permission push
-   
-   # Invite the professor
-   gh repo set-access react-cicd-demo --user sillyfunnypedro --permission push
-   ```
-
-3. **Important:** Make sure the professor **sillyfunnypedro** is invited!
-
-4. If using Workflow B, keep the repository page open - you'll clone it in Part 2
+   - **Important:** Add the professor: **sillyfunnypedro**
 
 **All other team members should:**
 - Accept the collaboration invitation (check email or GitHub notifications)
-- Clone the repository once the first member has pushed the initial code
+- Clone the team's forked repository:
+  ```bash
+  git clone https://github.com/TEAM-LEAD-USERNAME/react-cicd-demo.git
+  cd react-cicd-demo
+  ```
 
 ## Part 1: Understanding the Provided Application (5 minutes)
 
@@ -100,8 +85,8 @@ react-cicd-demo/
 
 ### Install Dependencies and Test Locally
 ```bash
-# Navigate to the provided application directory
-cd react-cicd-demo
+# You should already be in the react-cicd-demo directory
+# If not: cd react-cicd-demo
 
 # Install all dependencies
 npm install
@@ -117,120 +102,27 @@ If you run the dev server, visit `http://localhost:5173` to see your app running
 
 **Checkpoint:** Make sure all tests pass before continuing!
 
-**Note:** Don't worry about git yet - you'll set that up in Part 2 after cloning your team's repository.
+## Part 2: Verify Your Setup (2 minutes)
 
-## Part 2: Push Application to GitHub (5 minutes)
+Before configuring CI/CD, let's verify everything is working:
 
-**The designated team member who created the GitHub repo should choose ONE of these workflows:**
+1. **Check your repository on GitHub:**
+   - Visit your forked repository: `https://github.com/YOUR-USERNAME/react-cicd-demo/`
+   - Confirm all files are present (especially `.gitignore`, `.babelrc`, and `.github/workflows/`)
 
----
+2. **Verify git remote:**
+   ```bash
+   # Should show your fork, not the original repo
+   git remote -v
+   ```
 
-### Workflow A: Local-First with GitHub CLI (Fastest!)
+3. **All teammates should have cloned the fork and run:**
+   ```bash
+   npm install
+   npm test
+   ```
 
-**If you have `gh` CLI installed and already have the application files:**
-
-```bash
-# Navigate to the provided application directory
-cd react-cicd-demo
-
-# Initialize git repository
-git init
-
-# Add all files
-git add -A
-
-# Create initial commit
-git commit -m "Initial commit: React TypeScript app with tests"
-
-# Create GitHub repo and push in one command
-gh repo create react-cicd-demo --public --source=. --remote=origin --push
-```
-
-That's it! Your code is now on GitHub. Skip to Part 3.
-
----
-
-### Workflow B: Clone Empty Repository First
-
-**If you prefer the traditional workflow or don't have `gh` CLI:**
-
-#### Step 1: Clone the Empty Repository
-```bash
-# Replace YOUR-USERNAME with your actual GitHub username
-git clone https://github.com/YOUR-USERNAME/react-cicd-demo.git
-
-# Navigate into the cloned repository
-cd react-cicd-demo
-```
-
-#### Step 2: Copy the Application Files
-
-**Important:** You need to copy ALL files including hidden files (`.gitignore`, `.babelrc`, etc.)
-
-**Option 1: Using Command Line (Mac/Linux)**
-```bash
-# Navigate to where your empty repo is
-cd react-cicd-demo
-
-# Copy all files (including hidden ones) from the provided directory
-# Replace /path/to/provided/react-cicd-demo with the actual path
-cp -r /path/to/provided/react-cicd-demo/. .
-
-# Verify hidden files were copied
-ls -la
-```
-
-**Option 2: Using Finder (Mac) or File Explorer (Windows)**
-1. Open the provided `react-cicd-demo` folder in Finder/File Explorer
-2. Press `Cmd+Shift+.` (Mac) or enable "Show hidden files" (Windows)
-3. Select ALL files and folders (including hidden files starting with `.`)
-4. Copy them to your cloned `react-cicd-demo` directory
-5. Verify `.gitignore` and `.babelrc` are present
-
-#### Step 3: Verify Files Before Committing
-```bash
-# Check what files were copied (should see hidden files too)
-ls -la
-
-# You should see at least these files:
-# .babelrc, .gitignore, index.html, jest.config.js,
-# package.json, tsconfig.json, tsconfig.node.json, vite.config.ts,
-# and the src/ directory (which includes setupTests.ts)
-
-# If any are missing, go back to Step 2 and copy them
-```
-
-#### Step 4: Add, Commit, and Push
-```bash
-# Add all files to git
-git add .
-
-# Check what will be committed
-git status
-
-# Create initial commit
-git commit -m "Initial commit: React TypeScript app with tests"
-
-# Push to GitHub
-git push origin main
-```
-
----
-
-### Verify on GitHub (Both Workflows)
-
-Regardless of which workflow you used:
-
-- Visit your repository on GitHub
-- Confirm all files are present (especially `.gitignore` and `.babelrc`)
-- Check that the commit history shows your initial commit
-
-**Teammates can now clone and set up:**
-```bash
-git clone https://github.com/YOUR-USERNAME/react-cicd-demo.git
-cd react-cicd-demo
-npm install
-```
+**You're now ready to set up the CI/CD pipeline!**
 
 ## Part 3: Configure GitHub Actions for CI/CD (15 minutes)
 
@@ -490,8 +382,11 @@ git push
 - Check that base path in `vite.config.ts` matches repo name
 - Make sure workflow permissions are configured correctly (see above)
 
-**Site shows 404:**
+**Site shows 404 or assets fail to load:**
 - Wait a few minutes for GitHub Pages to build and deploy
-- Check the base path configuration in `vite.config.ts`
+- **Most common issue:** Verify your repository is named exactly `react-cicd-demo` (the base path in `vite.config.ts` depends on this)
+- If you renamed the repository, either:
+  - Rename it back to `react-cicd-demo`, OR
+  - Update the `base` path in `vite.config.ts` to match your repo name (e.g., `base: '/your-repo-name/'`)
 - Verify the deployment completed successfully in the **Actions** tab
 - Ensure `.nojekyll` file is being created in the build (workflow does this automatically)
